@@ -16,3 +16,6 @@ Build advanced threat detection and security response patterns.
 
 ### [MFA](https://codelab.uniken.com/codelabs/mfa-activation-login-react-native/index.html?index=..%2F..index#0)
 Build MFA MFA system that handles Activation and Login flow.
+
+### [MFA Session Management](https://codelab.uniken.com/codelabs/session-management-flow-codelab/index.html?index=..%2F..index#0)
+Build MFA MFA system that handles Activation and Login flow.
