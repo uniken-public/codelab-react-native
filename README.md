@@ -8,14 +8,17 @@ REL-ID is a secure mobile identity platform that provides seamless authenticatio
 
 ## 🧬 Codelabs
 
-### [SDK Initialization](https://codelab.uniken.com/codelabs/relid-initialization-flow/index.html?index=..%2F..index#0)
+### [SDK Initialization](https://codelab.uniken.com/codelabs/rn-relid-initialization-flow/index.html?index=..%2F..index#0)
 Learn REL-ID SDK setup, event handling, and connection profiles.
 
-### [Mobile Threat Detection](https://codelab.uniken.com/codelabs/mtd-flow-codelab/index.html?index=..%2F..index#0)
+### [Mobile Threat Detection](https://codelab.uniken.com/codelabs/rn-mtd-flow/index.html?index=..%2F..index#0)
 Build advanced threat detection and security response patterns.
 
-### [MFA](https://codelab.uniken.com/codelabs/mfa-activation-login-react-native/index.html?index=..%2F..index#0)
-Build MFA system that handles Activation and Login flow.
+### [MFA](https://codelab.uniken.com/codelabs/rn-mfa-activation-login-flow/index.html?index=..%2F..index#0)
+Build MFA system that handles activation and login flow.
 
-### [MFA Session Management](https://codelab.uniken.com/codelabs/session-management-flow-codelab/index.html?index=..%2F..index#0)
+### [MFA Session Management](https://codelab.uniken.com/codelabs/rn-session-management-flow/index.html?index=..%2F..index#0)
 Build MFA system with session management handling.
+
+### [MFA Additional Device Activation](https://codelab.uniken.com/codelabs/rn-mfa-additional-device-activation-flow/index.html?index=..%2F..index#0)
+Build MFA system with additional device activation flow.
