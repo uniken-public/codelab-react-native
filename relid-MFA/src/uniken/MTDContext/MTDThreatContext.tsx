@@ -243,11 +243,8 @@ export const MTDThreatProvider: React.FC<MTDThreatProviderProps> = ({ children }
     } else {
       console.log('MTDThreatContext: Terminate mode - directly exiting application');
       // Direct exit for terminate mode (genuine terminate events)
+      hideThreatModal();
       handlePlatformSpecificExit('terminate');
-      // On non-iOS platforms, if exit fails, hide the modal as fallback
-      if (Platform.OS !== 'ios') {
-        hideThreatModal();
-      }
     }
   };
 
