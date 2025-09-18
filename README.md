@@ -22,3 +22,6 @@ Build MFA system with session management handling.
 
 ### [MFA Additional Device Activation](https://codelab.uniken.com/codelabs/rn-mfa-additional-device-activation-flow/index.html?index=..%2F..index#0)
 Build MFA system with additional device activation flow.
+
+### [MFA Forgot Password](https://codelab.uniken.com/codelabs/rn-mfa-forgot-password-flow/index.html?index=..%2F..index#0)
+Build MFA with forgot password flow.
