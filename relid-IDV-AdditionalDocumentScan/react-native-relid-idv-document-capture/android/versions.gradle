@@ -1,0 +1,19 @@
+ext {
+
+  setup = [
+    compileSdk: 35,
+    minSdk    : 23,
+    targetSdk : 35
+  ]
+
+
+  versions = [
+    appcompat: '1.5.1',
+    material : '1.6.1',
+    timber   : "5.0.1",
+    anlogger : "0.1.1"
+  ]
+
+  debugSetup = [useMultiDex: false]
+  releaseSetup = [useMultiDex: false]
+}

@@ -340,6 +340,48 @@ export class RdnaService {
   }
 
   /**
+   * Updates password when expired (Password Expiry Flow)
+   *
+   * This method is specifically used for updating expired passwords during the MFA flow.
+   * When a password is expired during login (challengeMode=0), the SDK automatically
+   * re-triggers getPassword() with challengeMode=4 (RDNA_OP_UPDATE_ON_EXPIRY).
+   * The app should then call this method with both current and new passwords.
+   * Uses sync response pattern similar to setPassword() method.
+   *
+   * @see https://developer.uniken.com/docs/password-expiry
+   *
+   * Response Validation Logic:
+   * 1. Check error.longErrorCode: 0 = success, > 0 = error
+   * 2. On success, triggers onUpdateCredentialResponse event immediately
+   * 3. On successful password update, triggers onUserLoggedIn event
+   * 4. Async events will be handled by event listeners
+   *
+   * @param currentPassword The user's current password
+   * @param newPassword The new password to set
+   * @param challengeMode Challenge mode (should be 4 for RDNA_OP_UPDATE_ON_EXPIRY)
+   * @returns Promise<RDNASyncResponse> that resolves with sync response structure
+   */
+  async updatePassword(currentPassword: string, newPassword: string, challengeMode: number = 4): Promise<RDNASyncResponse> {
+    return new Promise((resolve, reject) => {
+      console.log('RdnaService - Updating expired password with challengeMode:', challengeMode);
+
+      RdnaClient.updatePassword(currentPassword, newPassword, challengeMode, response => {
+        console.log('RdnaService - UpdatePassword sync callback received');
+
+        const result: RDNASyncResponse = response;
+
+        if (result.error && result.error.longErrorCode === 0) {
+          console.log('RdnaService - UpdatePassword sync response success, waiting for onUpdateCredentialResponse and onUserLoggedIn events');
+          resolve(result);
+        } else {
+          console.error('RdnaService - UpdatePassword sync response error:', result);
+          reject(result);
+        }
+      });
+    });
+  }
+
+  /**
    * Resets authentication state and returns to initial flow
    *
    * This method resets the current authentication flow and clears any stored state.

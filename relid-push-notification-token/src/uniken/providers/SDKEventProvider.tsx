@@ -143,6 +143,17 @@ export const SDKEventProvider: React.FC<SDKEventProviderProps> = ({ children }) 
         attemptsLeft: data.attemptsLeft,
         responseData: data,
       });
+    } else if (data.challengeMode === 4) {
+      // challengeMode = 4: Update expired password (RDNA_OP_UPDATE_ON_EXPIRY)
+      // Extract status message from response (e.g., "Password has expired. Please contact the admin.")
+      const statusMessage = data.challengeResponse?.status?.statusMessage || 'Your password has expired. Please update it to continue.';
+
+      NavigationService.navigateOrUpdate('UpdateExpiryPasswordScreen', {
+        eventData: data,
+        title: 'Update Expired Password',
+        subtitle: statusMessage,
+        responseData: data,
+      });
     } else {
       // challengeMode = 1: Set new password
       NavigationService.navigateOrUpdate('SetPasswordScreen', {

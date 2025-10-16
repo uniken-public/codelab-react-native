@@ -38,7 +38,7 @@ By completing this Additional Device Activation codelab, you'll be able to:
 
 Before starting this codelab, ensure you've completed:
 
-- **[REL-ID MFA Codelab](https://codelab.uniken.com/codelabs/relid-mfa-codelab/index.html?index=..%2F..index#0)** - Complete MFA implementation required
+- **[REL-ID MFA Codelab](https://codelab.uniken.com/codelabs/rn-mfa-activation-login-flow/index.html?index=..%2F..index#0)** - Complete MFA implementation required
 - Understanding of push notification systems and device-to-device communication
 - Experience with React Native drawer navigation and modal interfaces
 - Knowledge of REL-ID SDK event-driven architecture patterns

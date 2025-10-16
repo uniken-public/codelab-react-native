@@ -1,0 +1,33 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.1.20"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+allprojects {
+    repositories {
+        flatDir {
+            dirs "$rootDir/../node_modules/react-native-rdna-client/android/libs"
+        }
+        // Below flatDir is required for IDV document capture npm module
+        flatDir { 
+            dirs "$rootDir/../node_modules/react-native-relid-idv-document-capture/android/libs" 
+        }
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"

@@ -32,7 +32,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>This app needs the location to take latitude and longitude of a particular device at every specified time interval for the purpose of geofencing.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) uses Face ID for secure local device authentication.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>$(PRODUCT_NAME) will verify the endpoint to which the application is connected.</string>
 	<key>RCTNewArchEnabled</key>
 	<false/>
 	<key>UILaunchStoryboardName</key>

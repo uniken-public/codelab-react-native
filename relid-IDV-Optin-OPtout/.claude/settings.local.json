@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Dashboard/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/react-native-rdna-client/src/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/react-native-rdna-client/src/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Utils/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Utils/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REL-ID-RN-NPM/ReactReferenceApp/App/Components/Utils/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Scenes/**)",
+      "Bash(xcodebuild:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx react-native start:*)",
+      "Bash(npx react-native bundle:*)",
+      "Bash(node:*)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Scenes/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Components/PostLogin/**)",
+      "Bash(npx eslint:*)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Components/PostLogin/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/App/Components/Handlers/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)",
+      "Read(/Users/rac/Documents/Uniken/UNiken2025/Workspaces/git/REl-ID_RN-UrgentRelease/ReactReferenceApp/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

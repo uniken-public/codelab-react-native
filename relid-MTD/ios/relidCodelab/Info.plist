@@ -31,8 +31,12 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) uses Face ID for secure local device authentication.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) uses location to verify device security and detect insecure Wi-Fi networks.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>$(PRODUCT_NAME) will verify the endpoint to which the application is connected.</string>
 	<key>RCTNewArchEnabled</key>
 	<false/>
 	<key>UILaunchStoryboardName</key>
