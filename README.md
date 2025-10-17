@@ -61,3 +61,9 @@ Build MFA with identity verification additional document scan.
 
 ### [IDV Biometric Opt-In & Opt-Out](https://codelab.uniken.com/codelabs/rn-idv-optin-optout-flow/index.html?index=..%2F..index#0)
 Build MFA with post-login identity verification biometric opt-in & opt-out.
+
+### [IDV Step-Up Authentication with Notifications](https://codelab.uniken.com/codelabs/rn-idv-stepup-authentication-notification-flow/index.html?index=..%2F..index#0)
+Build MFA and IDV with post-login step-Up authentication with Notifications.
+
+### [IDV Data Signing](https://codelab.uniken.com/codelabs/rn-idv-data-signing-flow/index.html?index=..%2F..index#0)
+Build MFA and IDV with post-login data signing.
