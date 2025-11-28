@@ -1,19 +1,19 @@
-# REL-ID React Native Codelab: Mobile Threat Defense
+# REL-ID React Native Codelab: Mobile Threat Detection
 
 [![React Native](https://img.shields.io/badge/React%20Native-0.80.1-blue.svg)](https://reactnative.dev/)
 [![REL-ID SDK](https://img.shields.io/badge/REL--ID%20SDK-v25.06.03-green.svg)](https://developer.uniken.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0.4-blue.svg)](https://www.typescriptlang.org/)
-[![Security](https://img.shields.io/badge/Security-MTD%20Enabled-red.svg)](https://developer.uniken.com/docs/mobile-threat-defense)
+[![Security](https://img.shields.io/badge/Security-MTD%20Enabled-red.svg)](https://developer.uniken.com/docs/mobile-threat-detection)
 
-> **Codelab Step 2:** Master advanced Mobile Threat Defense implementation with REL-ID SDK
+> **Codelab Step 2:** Master advanced Mobile Threat Detection implementation with REL-ID SDK
 
-This folder contains the source code for the solution of the [REL-ID MTD](https://codelab.uniken.com/codelabs/mtd-flow-codelab/index.html?index=..%2F..index#0)
+This folder contains the source code for the solution of the [REL-ID MTD](https://codelab.uniken.com/codelabs/rn-mtd-flow/index.html?index=..%2F..index#0)
 
 ## 🛡️ What You'll Learn
 
-In this advanced codelab, you'll master production-ready Mobile Threat Defense patterns:
+In this advanced codelab, you'll master production-ready Mobile Threat Detection patterns:
 
-- ✅ **Mobile Threat Defense (MTD)**: Real-time threat detection and response
+- ✅ **Mobile Threat Detection (MTD)**: Real-time threat detection and response
 - ✅ **User Consent Flows**: Handle non-critical threats with user interaction
 - ✅ **Terminating Threats**: Manage critical security threats automatically
 - ✅ **Platform-Specific Exits**: iOS HIG-compliant and Android native exit patterns
@@ -35,7 +35,7 @@ By completing this advanced codelab, you'll be able to:
 
 Before starting this codelab, ensure you've completed:
 
-- **[REL-ID Basic Integration Codelab](https://codelab.uniken.com/codelabs/relid-initialization-flow/index.html?index=..%2F..index#0)** - Foundation concepts required
+- **[REL-ID Basic Integration Codelab](https://codelab.uniken.com/codelabs/rn-relid-initialization-flow/index.html?index=..%2F..index#0)** - Foundation concepts required
 - Understanding of React Context API and advanced React patterns
 - Experience with React Native navigation and modal components
 - Knowledge of mobile security principles
@@ -66,7 +66,6 @@ relid-MTD/
 └── 📚 Production Configuration
     ├── package.json             # Production dependencies
     ├── tsconfig.json           # Strict TypeScript config
-    └── lefthook.yml            # Git hooks for code quality
 ```
 
 ## 🚀 Quick Start
@@ -75,7 +74,7 @@ relid-MTD/
 
 ```bash
 # Navigate to the codelab folder
-cd relid-initialize
+cd relid-MTD
 
 # Place the react-native-rdna-client plugin 
 # at root folder of this project (refer to Project Structure above for more info)
@@ -114,7 +113,7 @@ npx react-native run-ios
 
 ## 📚 Advanced Resources
 
-- **REL-ID MTD Documentation**: [Mobile Threat Defense Guide](https://developer.uniken.com/docs/mobile-threat-defense)
+- **REL-ID MTD Documentation**: [Mobile Threat Detection Guide](https://developer.uniken.com/docs/mobile-threat-detection)
 - **React Context Patterns**: [Advanced React Patterns](https://reactpatterns.com/)
 
 ## 💡Pro Tips
@@ -128,7 +127,7 @@ npx react-native run-ios
 
 ---
 
-**🛡️ Congratulations! You've mastered advanced Mobile Threat Defense with REL-ID SDK!**
+**🛡️ Congratulations! You've mastered advanced Mobile Threat Detection with REL-ID SDK!**
 
 *You're now equipped to integrate REL-ID MTD module into applications with comprehensive threat protection. Use this knowledge to protect your users and their data in production environments.*
 

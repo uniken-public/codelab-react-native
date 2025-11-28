@@ -26,7 +26,7 @@ Build MFA system with additional device activation flow.
 ### [MFA Forgot Password](https://codelab.uniken.com/codelabs/rn-mfa-forgot-password-flow/index.html?index=..%2F..index#0)
 Build MFA with forgot password flow.
 
-### [MFA Password Expiry](https://codelab.uniken.com/codelabs/rn-forgot-password-flow/index.html?index=..%2F..index#0)
+### [MFA Password Expiry](https://codelab.uniken.com/codelabs/rn-password-expiry-flow/index.html?index=..%2F..index#0)
 Build MFA with password expiry flow.
 
 ### [Set Notification Token](https://codelab.uniken.com/codelabs/rn-push-notification-integration/index.html?index=..%2F..index#0)
