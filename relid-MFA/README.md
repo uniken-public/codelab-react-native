@@ -7,7 +7,7 @@
 
 > **Codelab Step 3:** Master Multi-Factor Authentication implementation with REL-ID SDK
 
-This folder contains the source code for the solution of the [REL-ID MFA](https://codelab.uniken.com/)
+This folder contains the source code for the solution of the [REL-ID MFA](https://codelab.uniken.com/codelabs/rn-mfa-activation-login-flow/index.html?index=..%2F..index#0)
 
 ## 🔐 What You'll Learn
 
@@ -37,7 +37,7 @@ By completing this MFA codelab, you'll be able to:
 
 Before starting this codelab, ensure you've completed:
 
-- **[REL-ID Basic Integration Codelab](https://codelab.uniken.com/codelabs/relid-initialization-flow/index.html?index=..%2F..index#0)** - Foundation concepts required
+- **[REL-ID Basic Integration Codelab](https://codelab.uniken.com/codelabs/rn-relid-initialization-flow/index.html?index=..%2F..index#0)** - Foundation concepts required
 - Understanding of React Native navigation and form handling
 - Experience with multi-screen application flows
 - Knowledge of authentication and security principles

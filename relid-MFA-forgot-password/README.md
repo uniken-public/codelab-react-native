@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master Forgot Password workflows with REL-ID SDK verification challenges
 
-This folder contains the source code for the solution demonstrating [REL-ID Forgot Password Management](https://developer.uniken.com/docs/forgot-password) using secure verification challenge-based password reset flows.
+This folder contains the source code for the solution demonstrating [REL-ID Forgot Password Management](https://codelab.uniken.com/codelabs/rn-forgot-password-flow/index.html?index=..%2F..index#9) using secure verification challenge-based password reset flows.
 
 ## 🔐 What You'll Learn
 

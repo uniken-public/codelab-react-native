@@ -8,7 +8,7 @@
 
 > **Codelab Step 3:** Master Multi-Factor Authentication and Session Management with REL-ID SDK
 
-This folder contains the source code for the complete solution demonstrating [REL-ID MFA and Session Management](https://codelab.uniken.com/)
+This folder contains the source code for the complete solution demonstrating [REL-ID MFA and Session Management](https://codelab.uniken.com/codelabs/rn-session-management-flow/index.html?index=..%2F..index#0)
 
 ## 🔐 What You'll Learn
 

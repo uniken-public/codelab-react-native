@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master Push Notification Integration with REL-ID SDK token management
 
-This folder contains the source code for the solution demonstrating [REL-ID Push Notification Integration](https://developer.uniken.com/docs/push-notifications) with secure token registration.
+This folder contains the source code for the solution demonstrating [REL-ID Push Notification Integration](https://codelab.uniken.com/codelabs/rn-push-notification-integration/index.html?index=..%2F..index#0) with secure token registration.
 
 ## 🔔 What You'll Learn
 

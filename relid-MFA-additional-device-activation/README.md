@@ -6,9 +6,9 @@
 [![REL-ID Verify](https://img.shields.io/badge/REL--ID%20Verify-Enabled-purple.svg)]()
 [![Device Activation](https://img.shields.io/badge/Device%20Activation-Push%20Notifications-cyan.svg)]()
 
-> **Codelab Step 4:** Master Additional Device Activation with REL-ID Verify push notification system
+> **Codelab Step 4:** Master Additional Device Activation with REL-ID Verify push notification feature
 
-This folder contains the source code for the solution demonstrating [REL-ID Additional Device Activation](https://codelab.uniken.com/) using push notification-based device approval workflows.
+This folder contains the source code for the solution demonstrating [REL-ID Additional Device Activation](https://codelab.uniken.com/codelabs/rn-mfa-additional-device-activation-flow/index.html?index=..%2F..index#5) using push notification-based device approval workflows.
 
 ## 📱 What You'll Learn
 
@@ -39,6 +39,7 @@ By completing this Additional Device Activation codelab, you'll be able to:
 Before starting this codelab, ensure you've completed:
 
 - **[REL-ID MFA Codelab](https://codelab.uniken.com/codelabs/rn-mfa-activation-login-flow/index.html?index=..%2F..index#0)** - Complete MFA implementation required
+- **[REL-ID Session Management Codelab](https://codelab.uniken.com/codelabs/rn-session-management-flow/index.html?index=..%2F..index#0)** - Session handling patterns
 - Understanding of push notification systems and device-to-device communication
 - Experience with React Native drawer navigation and modal interfaces
 - Knowledge of REL-ID SDK event-driven architecture patterns
@@ -48,7 +49,7 @@ Before starting this codelab, ensure you've completed:
 
 ```
 relid-MFA-additional-device-activation/
-├── 📱 Enhanced React Native MFA + Device Activation App
+├── 📱  Complete React Native MFA + Device Activation App
 │   ├── android/                 # Android-specific configuration
 │   ├── ios/                     # iOS-specific configuration  
 │   └── react-native-rdna-client/ # REL-ID Native Bridge

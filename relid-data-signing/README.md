@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master cryptographic data signing with REL-ID SDK authentication levels
 
-This folder contains the source code for the solution demonstrating [REL-ID Data Signing](https://developer.uniken.com/docs/data-signing) using secure cryptographic authentication with multi-level biometric and password verification.
+This folder contains the source code for the solution demonstrating [REL-ID Data Signing](https://codelab.uniken.com/codelabs/rn-data-signing-flow/index.html?index=..%2F..index#3) using secure cryptographic authentication with multi-level biometric and password verification.
 
 ## 🔐 What You'll Learn
 

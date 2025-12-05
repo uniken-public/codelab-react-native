@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master user-initiated Password Update workflows with REL-ID SDK
 
-This folder contains the source code for the solution demonstrating [REL-ID Password Update Management](https://developer.uniken.com/docs/update-credentials) using secure user-initiated password update flows with credential availability checking, policy validation, and screen-level event handling.
+This folder contains the source code for the solution demonstrating [REL-ID Password Update Management](https://codelab.uniken.com/codelabs/rn-update-password-flow/index.html?index=..%2F..index#0) using secure user-initiated password update flows with credential availability checking, policy validation, and screen-level event handling.
 
 ## 🔐 What You'll Learn
 

@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master LDA Toggling workflows with REL-ID SDK for seamless authentication mode switching
 
-This folder contains the source code for the solution demonstrating [REL-ID LDA Toggling Management](https://developer.uniken.com/docs/lda-toggling) using secure authentication mode switching between password and Local Device Authentication (LDA).
+This folder contains the source code for the solution demonstrating [REL-ID LDA Toggling Management](https://codelab.uniken.com/codelabs/rn-lda-toggling/index.html?index=..%2F..index#0) using secure authentication mode switching between password and Local Device Authentication (LDA).
 
 ## 🔐 What You'll Learn
 
