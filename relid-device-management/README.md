@@ -8,7 +8,7 @@
 
 > **Codelab Advanced:** Master multi-device management with REL-ID SDK server synchronization and cooling period enforcement
 
-This folder contains the source code for the solution demonstrating [REL-ID Device Management](https://developer.uniken.com/docs/get-registered-devices) with comprehensive device lifecycle management, real-time synchronization, and server-enforced cooling periods.
+This folder contains the source code for the solution demonstrating [REL-ID Device Management](https://codelab.uniken.com/codelabs/rn-device-management-flow/index.html?index=..%2F..index#0) with comprehensive device lifecycle management, real-time synchronization, and server-enforced cooling periods.
 
 ## 🔐 What You'll Learn
 
