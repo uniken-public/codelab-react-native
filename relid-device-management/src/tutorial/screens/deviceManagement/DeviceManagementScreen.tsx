@@ -82,10 +82,7 @@ const DeviceManagementScreen: React.FC = () => {
       const eventManager = rdnaService.getEventManager();
 
       await new Promise<void>((resolve, reject) => {
-        // Preserve existing callback
-        const originalCallback = (eventManager as any).getRegisteredDeviceDetailsHandler;
-
-        // Set temporary callback for this screen
+        // Set callback for this screen
         eventManager.setGetRegisteredDeviceDetailsHandler((data: RDNAGetRegisteredDeviceDetailsData) => {
           console.log('DeviceManagementScreen - Received device details event');
           console.log('DeviceManagementScreen - Device count:', data.pArgs?.response?.ResponseData?.device?.length || 0);
@@ -111,13 +108,8 @@ const DeviceManagementScreen: React.FC = () => {
           setCoolingPeriodEndTimestamp(coolingPeriodEnd);
           setCoolingPeriodMessage(statusMsg);
           setIsCoolingPeriodActive(statusCode === 146);
-         
-          resolve();
 
-          // Restore original callback
-          if (originalCallback) {
-            eventManager.setGetRegisteredDeviceDetailsHandler(originalCallback);
-          }
+          resolve();
         });
 
         // Call the API with userID

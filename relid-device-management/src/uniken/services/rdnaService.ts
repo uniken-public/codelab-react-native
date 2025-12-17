@@ -9,6 +9,7 @@ import type {
   RDNASyncResponse,
   RDNADeviceAuthenticationDetailsData,
   RDNADeviceAuthManagementStatusData,
+  RDNARegisteredDevice,
 } from '../types/rdnaEvents';
 
 const RDNA_NO_LOGS = RDNALoggingLevel.RDNA_NO_LOGS;
@@ -1195,27 +1196,35 @@ export class RdnaService {
    */
   async updateDeviceDetails(
     userId: string,
-    devUuid: string,
-    devName: string,
+    device: RDNARegisteredDevice,
+    newDevName: string,
     operationType: number
   ): Promise<RDNASyncResponse> {
     return new Promise((resolve, reject) => {
       const operation = operationType === 0 ? 'rename' : 'delete';
       console.log(`RdnaService - Updating device details (${operation}) for user:`, userId);
-      console.log('RdnaService - Device UUID:', devUuid);
+      console.log('RdnaService - Device UUID:', device.devUUID);
       if (operationType === 0) {
-        console.log('RdnaService - New device name:', devName);
+        console.log('RdnaService - New device name:', newDevName);
       }
 
       // SDK expects JSON string payload with device array format
       // Status field: "Update" for rename, "Delete" for delete
+      // IMPORTANT: Must include ALL device fields (matching Cordova implementation)
       const status = operationType === 0 ? 'Update' : 'Delete';
 
       const payload = JSON.stringify({
         device: [{
-          devUUID: devUuid,
-          devName: devName,
-          status: status
+          devUUID: device.devUUID,
+          devName: newDevName,
+          status: status,
+          lastAccessedTs: device.lastAccessedTs,
+          lastAccessedTsEpoch: device.lastAccessedTsEpoch,
+          createdTs: device.createdTs,
+          createdTsEpoch: device.createdTsEpoch,
+          appUuid: device.appUuid,
+          currentDevice: device.currentDevice,
+          devBind: device.devBind
         }]
       });
 

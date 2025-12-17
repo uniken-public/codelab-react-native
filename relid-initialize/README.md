@@ -123,4 +123,4 @@ npx react-native run-ios
 
 **Ready to build secure React Native apps with REL-ID? Let's start coding! 🚀**
 
-*This codelab provides hands-on experience with REL-ID SDK fundamentals. Master these concepts before advancing to Mobile Threat Defense features.*
+*This codelab provides hands-on experience with REL-ID SDK fundamentals. Master these concepts before advancing to Mobile Threat Detection features.*

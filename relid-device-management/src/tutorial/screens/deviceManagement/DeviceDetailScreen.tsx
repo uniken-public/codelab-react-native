@@ -81,6 +81,75 @@ const DeviceDetailScreen: React.FC = () => {
     };
   }, []);
 
+  /**
+   * Unified method to handle device update operations (rename/delete)
+   */
+  const updateDevice = async (newName: string, operationType: number): Promise<void> => {
+    const isRename = operationType === 0;
+    const operation = isRename ? 'rename' : 'delete';
+
+    if (isRename) {
+      setIsRenaming(true);
+    } else {
+      setIsDeleting(true);
+    }
+
+    try {
+      console.log(`DeviceDetailScreen - ${operation} device:`, device.devUUID);
+
+      const eventManager = rdnaService.getEventManager();
+
+      await new Promise<void>((resolve, reject) => {
+        // Set callback for this operation
+        eventManager.setUpdateDeviceDetailsHandler((data: RDNAUpdateDeviceDetailsData) => {
+          console.log('DeviceDetailScreen - Received update device details event');
+
+          if (data.error && data.error.longErrorCode !== 0) {
+            console.error(`DeviceDetailScreen - ${operation} error:`, data.error);
+            reject(new Error(data.error?.errorString || `Failed to ${operation} device`));
+            return;
+          }
+
+          const statusCode = data.pArgs?.response?.StatusCode || 0;
+          const statusMsg = data.pArgs?.response?.StatusMsg || '';
+
+          if (statusCode === 100) {
+            console.log(`DeviceDetailScreen - ${operation} successful`);
+            if (isRename) {
+              setCurrentDeviceName(newName);
+            }
+            resolve();
+          } else if (statusCode === 146) {
+            reject(new Error('Device management is currently in cooling period. Please try again later.'));
+          } else {
+            reject(new Error(statusMsg || `Failed to ${operation} device`));
+          }
+        });
+
+        rdnaService.updateDeviceDetails(userID, device, newName, operationType).catch(reject);
+      });
+
+      // Success handling
+      if (isRename) {
+        setShowRenameDialog(false);
+      }
+
+      Alert.alert('Success', `Device ${isRename ? 'renamed' : 'deleted'} successfully`, [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
+    } catch (error) {
+      console.error(`DeviceDetailScreen - ${operation} failed:`, error);
+      const errorMessage = error instanceof Error ? error.message : `Failed to ${operation} device`;
+      Alert.alert(`${isRename ? 'Rename' : 'Delete'} Failed`, errorMessage);
+    } finally {
+      if (isRename) {
+        setIsRenaming(false);
+      } else {
+        setIsDeleting(false);
+      }
+    }
+  };
+
   if (!device) {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -151,55 +220,7 @@ const DeviceDetailScreen: React.FC = () => {
    * Handles rename device action
    */
   const handleRenameDevice = async (newName: string) => {
-    setIsRenaming(true);
-
-    try {
-      console.log('DeviceDetailScreen - Renaming device:', device.devUUID, 'to:', newName);
-
-      const eventManager = rdnaService.getEventManager();
-
-      await new Promise<void>((resolve, reject) => {
-        const originalCallback = (eventManager as any).updateDeviceDetailsHandler;
-
-        eventManager.setUpdateDeviceDetailsHandler((data: RDNAUpdateDeviceDetailsData) => {
-          console.log('DeviceDetailScreen - Received update device details event');
-
-          if (data.error && data.error.longErrorCode !== 0) {
-            console.error('DeviceDetailScreen - Rename error:', data.error);
-            reject(new Error(data.error?.errorString || 'Failed to rename device'));
-            return;
-          }
-
-          const statusCode = data.pArgs?.response?.StatusCode || 0;
-          const statusMsg = data.pArgs?.response?.StatusMsg || '';
-
-          if (statusCode === 100) {
-            console.log('DeviceDetailScreen - Rename successful');
-            setCurrentDeviceName(newName);
-            resolve();
-          } else if (statusCode === 146) {
-            reject(new Error('Device management is currently in cooling period. Please try again later.'));
-          } else {
-            reject(new Error(statusMsg || 'Failed to rename device'));
-          }
-
-          if (originalCallback) {
-            eventManager.setUpdateDeviceDetailsHandler(originalCallback);
-          }
-        });
-
-        rdnaService.updateDeviceDetails(userID, device.devUUID, newName, 0).catch(reject);
-      });
-
-      setShowRenameDialog(false);
-      Alert.alert('Success', 'Device renamed successfully');
-    } catch (error) {
-      console.error('DeviceDetailScreen - Rename failed:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to rename device';
-      Alert.alert('Rename Failed', errorMessage);
-    } finally {
-      setIsRenaming(false);
-    }
+    await updateDevice(newName, 0);
   };
 
   /**
@@ -217,55 +238,7 @@ const DeviceDetailScreen: React.FC = () => {
   };
 
   const performDeleteDevice = async () => {
-    setIsDeleting(true);
-
-    try {
-      console.log('DeviceDetailScreen - Deleting device:', device.devUUID);
-
-      const eventManager = rdnaService.getEventManager();
-
-      await new Promise<void>((resolve, reject) => {
-        const originalCallback = (eventManager as any).updateDeviceDetailsHandler;
-
-        eventManager.setUpdateDeviceDetailsHandler((data: RDNAUpdateDeviceDetailsData) => {
-          console.log('DeviceDetailScreen - Received update device details event');
-
-          if (data.error && data.error.longErrorCode !== 0) {
-            console.error('DeviceDetailScreen - Delete error:', data.error);
-            reject(new Error(data.error?.errorString || 'Failed to delete device'));
-            return;
-          }
-
-          const statusCode = data.pArgs?.response?.StatusCode || 0;
-          const statusMsg = data.pArgs?.response?.StatusMsg || '';
-
-          if (statusCode === 100) {
-            console.log('DeviceDetailScreen - Delete successful');
-            resolve();
-          } else if (statusCode === 146) {
-            reject(new Error('Device management is currently in cooling period. Please try again later.'));
-          } else {
-            reject(new Error(statusMsg || 'Failed to delete device'));
-          }
-
-          if (originalCallback) {
-            eventManager.setUpdateDeviceDetailsHandler(originalCallback);
-          }
-        });
-
-        rdnaService.updateDeviceDetails(userID, device.devUUID, '', 1).catch(reject);
-      });
-
-      Alert.alert('Success', 'Device deleted successfully', [
-        { text: 'OK', onPress: () => navigation.goBack() }
-      ]);
-    } catch (error) {
-      console.error('DeviceDetailScreen - Delete failed:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to delete device';
-      Alert.alert('Delete Failed', errorMessage);
-    } finally {
-      setIsDeleting(false);
-    }
+    await updateDevice('', 1);
   };
 
   return (

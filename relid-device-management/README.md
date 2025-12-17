@@ -31,7 +31,7 @@ By completing this Device Management codelab, you'll be able to:
 2. **Build device management interfaces** with rename and delete operations
 3. **Handle server-enforced cooling periods** with visual warnings and action disabling
 4. **Protect current device** from accidental deletion with validation checks
-5. **Design sync+async patterns** with proper event handler preservation
+5. **Design sync+async patterns** with proper event handler lifecycle management
 6. **Implement three-layer error handling** for comprehensive error detection
 7. **Create real-time sync experiences** with pull-to-refresh functionality
 8. **Debug device management flows** and troubleshoot operation-related issues
@@ -200,7 +200,7 @@ await rdnaService.updateDeviceDetails(
 ### Checkpoint 1: Sync+Async Pattern Understanding
 - [ ] I understand the two-phase response pattern (sync acknowledgment + async event)
 - [ ] I know why event handlers must be registered BEFORE API calls
-- [ ] I can implement proper callback preservation to avoid memory leaks
+- [ ] I can implement proper handler cleanup in useEffect to avoid memory leaks
 - [ ] I understand when to use screen-level vs global event handlers
 - [ ] I can debug issues related to missing or incorrectly timed event handlers
 
@@ -304,23 +304,24 @@ await rdnaService.updateDeviceDetails(
 ## 💡 Pro Tips
 
 ### Device Management Implementation Best Practices
-1. **Always preserve event handlers** - Use callback preservation pattern to prevent memory leaks
+1. **Use unified handler methods** - Single event handler for multiple operations (DRY principle)
 2. **Register handlers before API calls** - Event handlers must be set before calling SDK APIs
-3. **Implement three-layer error handling** - Check API errors, status codes, and promise rejections
+3. **Implement proper error handling** - Check API errors (longErrorCode) and status codes (100, 146)
 4. **Protect current device** - Never allow deletion of device with currentDevice: true
 5. **Enforce cooling periods** - Disable all operations when StatusCode is 146
-6. **Use pull-to-refresh** - Provide manual refresh for real-time synchronization
-7. **Show loading states** - Always provide visual feedback during API operations
-8. **Confirm destructive actions** - Use Alert.alert for delete operations
+6. **Pass complete device objects** - Include all device fields in updateDeviceDetails payload
+7. **Use pull-to-refresh** - Provide manual refresh for real-time synchronization
+8. **Show loading states** - Always provide visual feedback during API operations
+9. **Confirm destructive actions** - Use Alert.alert for delete operations
 
 ### Security & User Experience
-9. **Validate before API calls** - Check cooling period and current device before operations
-10. **Display cooling period warnings** - Show prominent banner when StatusCode 146
-11. **Highlight current device** - Use badges or indicators for current device visibility
-12. **Auto-refresh after operations** - Reload device list after successful rename/delete
-13. **Handle cleanup on unmount** - Restore original event handlers in useEffect cleanup
-14. **Provide timestamp context** - Display "Last accessed" and "Created" timestamps
-15. **Optimize list rendering** - Use FlatList with proper keyExtractor for performance
+10. **Validate before API calls** - Check cooling period and current device before operations
+11. **Display cooling period warnings** - Show prominent banner when StatusCode 146
+12. **Highlight current device** - Use badges or indicators for current device visibility
+13. **Auto-refresh after operations** - Reload device list after successful rename/delete
+14. **Clean up handlers on unmount** - Reset event handlers in useEffect cleanup
+15. **Provide timestamp context** - Display "Last accessed" and "Created" timestamps
+16. **Optimize list rendering** - Use FlatList with proper keyExtractor for performance
 
 ## 🔗 Key Implementation Files
 
@@ -347,29 +348,32 @@ async getRegisteredDeviceDetails(userId: string): Promise<RDNASyncResponse> {
 ### Device Update API Implementation
 ```typescript
 // rdnaService.ts - Device Update API (Rename/Delete)
+import type { RDNARegisteredDevice } from '../types/rdnaEvents';
+
 async updateDeviceDetails(
   userId: string,
-  devUuid: string,
-  devName: string,
+  device: RDNARegisteredDevice,
+  newDevName: string,
   operationType: number
 ): Promise<RDNASyncResponse> {
   // SDK expects JSON string with complete device object array format
   // The status field determines operation: "Update" for rename, "Delete" for delete
   const status = operationType === 0 ? 'Update' : 'Delete';
 
-  // Complete device object structure required by SDK
+  // Complete device object structure with ALL actual fields from device parameter
+  // IMPORTANT: SDK requires all device fields, not just the ones being updated
   const payload = JSON.stringify({
     device: [{
-      devUUID: devUuid,
-      devName: devName,
+      devUUID: device.devUUID,
+      devName: newDevName,
       status: status,
-      lastAccessedTs: "2025-10-09T11:39:49UTC",
-      lastAccessedTsEpoch: 1760009989000,
-      createdTs: "2025-10-09T11:38:34UTC",
-      createdTsEpoch: 1760009914000,
-      appUuid: "6b72172f-3e51-4ea9-b217-2f3e51aea9c3",
-      currentDevice: true,
-      devBind: 0
+      lastAccessedTs: device.lastAccessedTs,
+      lastAccessedTsEpoch: device.lastAccessedTsEpoch,
+      createdTs: device.createdTs,
+      createdTsEpoch: device.createdTsEpoch,
+      appUuid: device.appUuid,
+      currentDevice: device.currentDevice,
+      devBind: device.devBind
     }]
   });
 
@@ -426,25 +430,22 @@ async updateDeviceDetails(
 }
 ```
 
-### Callback Preservation Pattern with Cleanup
+### Event Handler Lifecycle Pattern with Cleanup
 ```typescript
 // DeviceManagementScreen.tsx - Proper Event Handler Setup with Cleanup
 const loadDevices = useCallback(async () => {
   const eventManager = rdnaService.getEventManager();
 
   await new Promise<void>((resolve, reject) => {
-    // Preserve existing callback
-    const originalCallback = eventManager.getRegisteredDeviceDetailsHandler;
-
-    // Set temporary callback for this screen
+    // Set callback for this screen
     eventManager.setGetRegisteredDeviceDetailsHandler((data) => {
-      // Layer 1: Check API errors
+      // Check API errors
       if (data.error && data.error.longErrorCode !== 0) {
         reject(new Error(data.error.errorString));
         return;
       }
 
-      // Layer 2: Check status code
+      // Check status code
       const deviceList = data.pArgs?.response?.ResponseData?.device || [];
       const statusCode = data.pArgs?.response?.StatusCode || 0;
       const coolingPeriodEnd = data.pArgs?.response?.ResponseData
@@ -455,14 +456,9 @@ const loadDevices = useCallback(async () => {
       setCoolingPeriodEndTimestamp(coolingPeriodEnd);
 
       resolve();
-
-      // Restore original callback
-      if (originalCallback) {
-        eventManager.setGetRegisteredDeviceDetailsHandler(originalCallback);
-      }
     });
 
-    // Layer 3: Call API with promise rejection handling
+    // Call API with promise rejection handling
     rdnaService.getRegisteredDeviceDetails(userID).catch(reject);
   });
 }, [userID]);
@@ -483,11 +479,12 @@ useFocusEffect(
 );
 ```
 
-### Event Handler Cleanup Pattern
+### Unified Event Handler Pattern
 ```typescript
-// DeviceDetailScreen.tsx - Proper Event Handler Cleanup
+// DeviceDetailScreen.tsx - Unified Handler for Rename and Delete
 const DeviceDetailScreen: React.FC = () => {
   const [isRenaming, setIsRenaming] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   /**
    * Cleanup event handlers on component unmount
@@ -502,61 +499,105 @@ const DeviceDetailScreen: React.FC = () => {
     };
   }, []); // Empty dependency array = cleanup only on unmount
 
-  const handleRenameDevice = async (newName: string) => {
-    setIsRenaming(true);
+  /**
+   * Unified method to handle device update operations (rename/delete)
+   */
+  const updateDevice = async (newName: string, operationType: number): Promise<void> => {
+    const isRename = operationType === 0;
+    const operation = isRename ? 'rename' : 'delete';
+
+    if (isRename) {
+      setIsRenaming(true);
+    } else {
+      setIsDeleting(true);
+    }
+
     try {
       const eventManager = rdnaService.getEventManager();
 
       await new Promise<void>((resolve, reject) => {
-        const originalCallback = eventManager.updateDeviceDetailsHandler;
-
+        // Set callback for this operation
         eventManager.setUpdateDeviceDetailsHandler((data) => {
-          // Process response...
+          // Check API errors
+          if (data.error && data.error.longErrorCode !== 0) {
+            reject(new Error(data.error?.errorString || `Failed to ${operation} device`));
+            return;
+          }
 
-          // Restore original callback after use
-          if (originalCallback) {
-            eventManager.setUpdateDeviceDetailsHandler(originalCallback);
+          // Check status code
+          const statusCode = data.pArgs?.response?.StatusCode || 0;
+          const statusMsg = data.pArgs?.response?.StatusMsg || '';
+
+          if (statusCode === 100) {
+            if (isRename) {
+              setCurrentDeviceName(newName);
+            }
+            resolve();
+          } else if (statusCode === 146) {
+            reject(new Error('Device management is in cooling period'));
+          } else {
+            reject(new Error(statusMsg || `Failed to ${operation} device`));
           }
         });
 
-        rdnaService.updateDeviceDetails(userID, device.devUUID, newName, 0)
-          .catch(reject);
+        rdnaService.updateDeviceDetails(userID, device, newName, operationType).catch(reject);
       });
 
-      Alert.alert('Success', 'Device renamed successfully');
+      Alert.alert('Success', `Device ${isRename ? 'renamed' : 'deleted'} successfully`, [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
     } catch (error) {
-      Alert.alert('Error', error.message);
+      const errorMessage = error instanceof Error ? error.message : `Failed to ${operation} device`;
+      Alert.alert(`${isRename ? 'Rename' : 'Delete'} Failed`, errorMessage);
     } finally {
-      setIsRenaming(false);
+      if (isRename) {
+        setIsRenaming(false);
+      } else {
+        setIsDeleting(false);
+      }
     }
+  };
+
+  const handleRenameDevice = async (newName: string) => {
+    await updateDevice(newName, 0);
+  };
+
+  const performDeleteDevice = async () => {
+    await updateDevice('', 1);
   };
 
   return (/* UI */);
 };
 ```
 
-**Why Cleanup is Critical:**
-1. **Prevents Memory Leaks**: Unreferenced handlers can accumulate in memory
-2. **Avoids Event Conflicts**: Multiple screens setting the same handler causes unpredictable behavior
-3. **Ensures Proper State**: Clean slate for next screen mount
-4. **React Best Practice**: Always cleanup side effects in useEffect
+**Why This Pattern is Better:**
+1. **DRY Principle**: Single handler method for both operations eliminates code duplication
+2. **Prevents Memory Leaks**: Handler cleaned up in useEffect when component unmounts
+3. **Simpler Code**: No callback preservation needed - handler is screen-owned
+4. **Easier Maintenance**: Changes to error handling only need to be made once
+5. **React Best Practice**: Proper cleanup in useEffect return function
 
 ### Three-Layer Error Handling Implementation
 ```typescript
-// DeviceDetailScreen.tsx - Complete Error Handling with Cleanup
-const handleRenameDevice = async (newName: string) => {
-  setIsRenaming(true);
+// DeviceDetailScreen.tsx - Complete Error Handling
+const updateDevice = async (newName: string, operationType: number) => {
+  const isRename = operationType === 0;
+  const operation = isRename ? 'rename' : 'delete';
+
+  if (isRename) {
+    setIsRenaming(true);
+  } else {
+    setIsDeleting(true);
+  }
 
   try {
     const eventManager = rdnaService.getEventManager();
 
     await new Promise<void>((resolve, reject) => {
-      const originalCallback = eventManager.updateDeviceDetailsHandler;
-
       eventManager.setUpdateDeviceDetailsHandler((data) => {
         // Layer 1: API Error Check
         if (data.error && data.error.longErrorCode !== 0) {
-          reject(new Error(data.error.errorString || 'Failed to rename device'));
+          reject(new Error(data.error.errorString || `Failed to ${operation} device`));
           return;
         }
 
@@ -565,33 +606,36 @@ const handleRenameDevice = async (newName: string) => {
         const statusMsg = data.pArgs?.response?.StatusMsg || '';
 
         if (statusCode === 100) {
-          setCurrentDeviceName(newName);
+          if (isRename) {
+            setCurrentDeviceName(newName);
+          }
           resolve();
         } else if (statusCode === 146) {
           reject(new Error('Device management is currently in cooling period.'));
         } else {
-          reject(new Error(statusMsg || 'Failed to rename device'));
-        }
-
-        // Restore original callback
-        if (originalCallback) {
-          eventManager.setUpdateDeviceDetailsHandler(originalCallback);
+          reject(new Error(statusMsg || `Failed to ${operation} device`));
         }
       });
 
       // Layer 3: Promise Rejection Handling
-      rdnaService.updateDeviceDetails(userID, device.devUUID, newName, 0)
+      rdnaService.updateDeviceDetails(userID, device, newName, operationType)
         .catch(reject);
     });
 
-    Alert.alert('Success', 'Device renamed successfully');
+    Alert.alert('Success', `Device ${isRename ? 'renamed' : 'deleted'} successfully`, [
+      { text: 'OK', onPress: () => navigation.goBack() }
+    ]);
   } catch (error) {
     const errorMessage = error instanceof Error
       ? error.message
-      : 'Failed to rename device';
-    Alert.alert('Rename Failed', errorMessage);
+      : `Failed to ${operation} device`;
+    Alert.alert(`${isRename ? 'Rename' : 'Delete'} Failed`, errorMessage);
   } finally {
-    setIsRenaming(false);
+    if (isRename) {
+      setIsRenaming(false);
+    } else {
+      setIsDeleting(false);
+    }
   }
 };
 ```
